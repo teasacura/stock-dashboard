@@ -103,7 +103,7 @@ export default {
         },
          {
           label: "Close",
-          backgroundColor: "#800080",
+          backgroundColor: "#ffa500",
           dataName: "stockClose"
         }
       ],

@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     title() {
-      return `Daily Prices for ${this.symbol} on ${Months[this.selectedMonth]} ${this.selectedYear}`;
+      return `Daily Prices for Stock Symbol ${this.symbol} on ${Months[this.selectedMonth]} ${this.selectedYear}`;
     },
     filteredData() {
       return this.stockData[this.selectedYear][this.selectedMonth];
