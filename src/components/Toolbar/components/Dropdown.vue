@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <div class="btn-group">
-      <li @click="toggleMenu" class="dropdown-toggle" v-if="selectedOption.name">
-        {{ selectedOption.name }}
+  <div class="btn-group">
+    <li @click="toggleMenu" class="dropdown-toggle" v-if="selectedOption.name">
+      {{ selectedOption.name }}
+      <span class="caret"></span>
+    </li>
+    <li @click="toggleMenu" class="dropdown-toggle dropdown-toggle-placeholder" v-if="!selectedOption.name">
+        {{placeholderText}}
         <span class="caret"></span>
+    </li>
+    <ul class="dropdown-menu" v-if="showMenu">
+      <li v-for="(option, idx) in dropDownOptions" :key="idx">
+        <a href="javascript:void(0)" @click="updateOption(option)">
+          {{ option.name }}
+        </a>
       </li>
-      <li @click="toggleMenu" class="dropdown-toggle dropdown-toggle-placeholder" v-if="!selectedOption.name">
-          {{placeholderText}}
-          <span class="caret"></span>
-      </li>
-      <ul class="dropdown-menu" v-if="showMenu">
-        <li v-for="(option, idx) in dropDownOptions" :key="idx">
-          <a href="javascript:void(0)" @click="updateOption(option)">
-            {{ option.name }}
-          </a>
-        </li>
-      </ul>
-    </div>
+    </ul>
   </div>
 </template>
 
@@ -51,18 +49,28 @@ export default {
     this.selectedOption = this.dropDownOptions.find((option) => {
       return option.number === this.selectedIndex;
     });
+    document.addEventListener("click", this.close)
+  },
+  beforeDestroy () {
+    document.removeEventListener("click",this.close)
   },
   created() {
+    
   },
   methods: {
     updateOption(option) {
         this.selectedOption = option;
         this.showMenu = false;
-        this.$emit('updateOption', this.selectedOption);
+        this.$emit("updateOption", this.selectedOption);
     },
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
+    close(e) {
+      if (!this.$el.contains(e.target)) {
+        this.showMenu = false
+      }
+    }
   }
 }
 </script>
@@ -76,6 +84,7 @@ export default {
   margin: 10px 1px;
   display: inline-block;
   vertical-align: middle;
+  padding: 5px;
 }
 .btn-group a:hover {
   text-decoration: none;
@@ -122,6 +131,8 @@ export default {
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
+  overflow-y: scroll;
+  height: 60vh;
 }
 .dropdown-menu > li > a {
   padding: 10px 30px;

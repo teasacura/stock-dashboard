@@ -1,19 +1,23 @@
 <template>
-  <div>
-    <Dropdown 
+  <div class="toolbar-container">
+    <Dropdown
       ref="month-dropdown"
       :selected-index="month"
       :drop-down-options="monthDropDownOptions"
       @updateOption="emitMonthUpdate"
       />
+    <Dropdown
+      ref="year-dropdown"
+      :selected-index="year"
+      :drop-down-options="yearDropDownOptions"
+      @updateOption="emitYearUpdate"
+      />
   </div>
-  <!-- <Dropdown ref="year-dropdown"/> -->
 </template>
 
 <script>
 
 import Dropdown from "./components/Dropdown.vue";
-import { Months } from "../../constants.js";
 
 export default {
   name: "Toolbar",
@@ -24,12 +28,22 @@ export default {
     month: {
       type: Number,
       required: false
+    },
+    year: {
+      type: Number,
+      required: false
+    },
+    monthDropDownOptions: {
+      type: Array,
+      required: false
+    },
+    yearDropDownOptions: {
+      type: Array,
+      required: false
     }
   },
   data() {
     return {
-        monthDropDownOptions: [],
-        yearDropDownOptions: []
     }
   },
   computed: {
@@ -37,19 +51,20 @@ export default {
   mounted() {
   },
   created() {
-    this.monthDropDownOptions = Months.map((monthName, index) => {
-      return {
-        name: monthName,
-        number: index
-      }
-    });
   },
   methods: {
     emitMonthUpdate(option) {
-      this.$emit('monthUpdateOption', option);
+      this.$emit("monthUpdateOption", option);
+    },
+    emitYearUpdate(option) {
+      this.$emit("yearUpdateOption", option);
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  .toolbar-container {
+    display: flex;
+  }
+</style>
