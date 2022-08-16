@@ -3,8 +3,8 @@
   <h1>
     {{ title }}
   </h1>
-  <ToolbarVue :month="selectedMonth" @updateOption="handleUpdate" />
-  <MainContentVue :month="selectedMonth" :stock-data="filteredData" />
+  <Toolbar :month="selectedMonth" @monthUpdateOption="handleMonthUpdate" />
+  <MainContent :month="selectedMonth" :stock-data="filteredData" />
   <div>
 
   </div>
@@ -14,16 +14,16 @@
 import dayjs from "https://cdn.skypack.dev/dayjs";
 import stockData from "./data/IBM-daily-data.json";
 
-import ToolbarVue from "./components/Toolbar.vue";
-import MainContentVue from "./components/MainContent/MainContent.vue";
+import Toolbar from "./components/Toolbar/Toolbar.vue";
+import MainContent from "./components/MainContent/MainContent.vue";
 
 import { KEYS, Months } from "./constants.js";
 
 export default {
   name: "ProjectApp",
   components: {
-    ToolbarVue,
-    MainContentVue
+    Toolbar,
+    MainContent
   },
   data() {
     return {
@@ -66,7 +66,7 @@ export default {
           this.stockData[entryYear][entryMonth][entryDay] = jsonData[dateString];
       }
     },
-    handleUpdate(option) {
+    handleMonthUpdate(option) {
       this.selectedMonth = option.number;
     }
   }
