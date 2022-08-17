@@ -38,7 +38,7 @@ export default {
       stockMetadata: null,
       stockData: {},
       selectedMonth: 6,
-      selectedYear: 2022,
+      selectedYear: 2000,
       yearOptionIndex: 22,
       yearDropDownOptions: []
     }
@@ -75,7 +75,6 @@ export default {
     this.parseJSONData(stockData[KEYS.DAILY]);
 
     this.yearDropDownOptions = this.createArrayOfYears(1999, 2022);
-    this.yearOptionIndex = this.findYearOptionIndex(this.selectedYear);
   },
   methods: {
     parseJSONData(jsonData) {
@@ -98,19 +97,10 @@ export default {
       this.selectedMonth = option.number;
     },
     handleYearUpdate(option) {
-      this.selectedYear = Number(option.name)
-      this.yearOptionIndex = this.findYearOptionIndex(this.selectedYear);
+      this.selectedYear = Number(option.name);
+      this.yearOptionIndex = option.number;
     },
     createArrayOfYears(startYear, endYear) {
-      // return Array(endYear - startYear + 1)
-      // .fill(startYear)
-      // .map((year, index) => {
-      //   const obj = {
-      //     "name": `${year + index}`,
-      //     "number": index
-      //   }
-      //   return obj
-      // });
        return Array(endYear - startYear + 1)
       .fill(endYear)
       .map((year, index) => {
@@ -120,11 +110,6 @@ export default {
         }
         return obj
       });
-    },
-    findYearOptionIndex(year) {
-      return this.yearDropDownOptions.findIndex((option, index) => {
-          return option.name === year.toString()
-        });
     }
   }
 }
