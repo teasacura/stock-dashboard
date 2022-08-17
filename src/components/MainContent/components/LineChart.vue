@@ -115,6 +115,7 @@ export default {
   },
   computed: {
     dataLabels() {
+      if (!this.stockData) return [];
       const monthName = Months[this.month];
       const monthDate = Object.keys(this.stockData);
       return monthDate.map((date) => {
